@@ -1291,7 +1291,7 @@ file = "/path/to/custom.log"
 
 <v-clicks>
 
-- GitHub Actions skeleton lives in repo (<span style="color: #00D4FF">`automation/github-actions.yml`</span>)
+- GitHub Actions example lives in repo (<span style="color: #00D4FF">`.github/workflows/codex-review.yml`</span>)
 - Typical steps: checkout → install Codex → authenticate → <span style="color: #00D4FF">`codex exec`</span> → upload artifacts
 - Cron ideas: weekly security sweep, dependency refresh, monthly cleanup
 - Guardrails: run on branches, review PRs before merge, notify on failures
@@ -1529,37 +1529,15 @@ backgroundSize: cover
 
 ---
 
-# 1. Generate from Scratch
+# Available Labs
 
 <v-clicks>
 
-- Spring Boot REST API
-- Python CLI tool
-- React dashboard
-
-</v-clicks>
-
----
-
-# 2. Refactor Existing Code
-
-<v-clicks>
-
-- Legacy Java modernization
-- Python code quality improvements
-- TypeScript migration
-
-</v-clicks>
-
----
-
-# 3. Multi-Language Projects
-
-<v-clicks>
-
-- Microservices architecture
-- Full-stack application
-- Data pipeline
+- **Lab 1**: Spring Boot REST API (generate from scratch)
+- **Lab 2**: Python Refactoring (improve legacy code)
+- **Lab 3**: React TypeScript Forms (frontend development)
+- **Lab 4**: Microservices Architecture (multi-language)
+- **Lab 5**: Skills Creation (extend Codex)
 
 </v-clicks>
 
@@ -1569,12 +1547,14 @@ backgroundSize: cover
 
 <v-clicks>
 
-- Starting code
-- Requirements
-- Expected outcomes
-- Solution walkthrough
+- Starter code (where applicable)
+- Step-by-step Codex prompts
+- Success criteria checklist
+- Advanced challenges
 
 </v-clicks>
+
+Note: You build the solution using Codex—no reference implementations provided!
 
 ---
 
@@ -1630,33 +1610,7 @@ backgroundSize: cover
 
 ---
 
-# Lab 5: Database Migration
-
-<v-clicks>
-
-- Objective: Use Codex + MCP tools to modernize a legacy PostgreSQL schema
-- Timebox: 60–75 minutes
-- Workspace: Bring an existing service repo or the sample DB provided in class
-- Instructions: follow the facilitator handout for the Database Migration lab
-
-</v-clicks>
-
----
-
-# Lab 6: AI Code Review
-
-<v-clicks>
-
-- Objective: Automate pull-request reviews with Codex in CI/CD
-- Timebox: 45 minutes
-- Workspace: Use any Git repo with open PRs (sample repo provided during workshop)
-- Instructions: follow the AI Code Review lab handout / `ai-review` workflow template
-
-</v-clicks>
-
----
-
-# Lab 7: Skills Creation
+# Lab 5: Skills Creation
 
 <v-clicks>
 
@@ -1664,20 +1618,21 @@ backgroundSize: cover
 - Timebox: 30 minutes
 - Task: Build a skill that generates conventional commit messages
 - Workspace: `exercises/skills-creation/`
-- Instructions: follow the Skills Creation lab handout
+- Instructions: open `exercises/skills-creation/README.md`
 
 </v-clicks>
 
 ---
 
-# Advanced Exercise: Full-Stack E-Commerce
+# Optional: Advanced Challenges
 
 <v-clicks>
 
-- Objective: Combine backend, frontend, and DevOps workflows into a production-style storefront
-- Suggested scope: Spring Boot API + React storefront + CI/CD automation
-- Workspace: Remix outputs from Labs 1–5 or start fresh from the provided capstone brief
-- Instructions: follow the capstone handout distributed during the workshop
+- **Database Migration**: Use Codex + MCP tools to modernize a legacy schema
+- **AI Code Review**: Automate PR reviews using `.github/workflows/codex-review.yml`
+- **Full-Stack Capstone**: Combine Labs 1-4 into a production-style application
+
+These build on the core labs and can be explored as time permits.
 
 </v-clicks>
 
@@ -1924,7 +1879,7 @@ RUST_LOG=trace codex
 
 ```bash
 # Check available models
-codex --list-models
+codex --model list
 
 # Fall back to different model
 codex --model gpt-5-codex-mini
