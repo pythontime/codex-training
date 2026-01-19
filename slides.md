@@ -90,6 +90,7 @@ Kousen IT, Inc.
 <v-clicks>
 
 - Advanced TOML configuration
+- **Agent Skills** - Reusable workflows (NEW!)
 - MCP services integration
 - Memory with AGENTS.md
 - Custom prompts and profiles
@@ -166,10 +167,12 @@ Kousen IT, Inc.
 
 <v-clicks>
 
-- OpenAI GPT models (default)
+- **GPT-5.2-Codex** - Latest, default for API (January 2026)
+- **GPT-5-Codex** - Stable workhorse model
+- **GPT-5-Codex-Mini** - Cost-effective, 4x more usage
+- **GPT-5.1-Codex-Max** - Long-running project-scale work
 - Anthropic Claude via API
 - Local models via Ollama
-- Custom providers via configuration
 
 </v-clicks>
 
@@ -182,7 +185,7 @@ Kousen IT, Inc.
 npm install -g @openai/codex
 
 # Homebrew (macOS/Linux)
-brew install codex
+brew install --cask codex
 
 # Direct binary download
 # Visit: https://github.com/openai/codex/releases
@@ -309,7 +312,7 @@ Review line-by-line before approving!
 Shows comprehensive session information:
 
 ```
-Current model: gpt-4
+Current model: gpt-5.2-codex
 Session ID: abc123
 Token usage: 15,432 / 128,000
 Cost estimate: $0.46
@@ -342,8 +345,7 @@ rg "database connection"
 
 ```toml
 # ~/.codex/config.toml
-[tools]
-web_search = true
+web_search_request = true
 ```
 
 <v-clicks>
@@ -606,6 +608,172 @@ codex exec "$(cat /tmp/review-prompt.md)"
 Usage: `./review-file.sh UserService.java security`
 
 ---
+layout: image-right
+image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80
+backgroundSize: cover
+---
+
+# Agent Skills
+
+<div class="mt-20">
+  <h2 class="text-4xl font-bold text-white bg-black bg-opacity-60 px-6 py-3 rounded-lg">
+    Reusable Workflows
+  </h2>
+  <p class="text-xl text-white bg-black bg-opacity-60 px-4 py-2 rounded mt-4">
+    December 2025
+  </p>
+</div>
+
+---
+
+# What Are Agent Skills?
+
+<v-clicks>
+
+- **Reusable instruction bundles** with optional scripts and resources
+- **Follows agentskills.io spec** (same as Claude Code!)
+- **Progressive loading**: Only name/description loaded at startup
+- **Two invocation modes**: Explicit (`$skill-name`) or implicit (auto-detect)
+- **Skills replace complex prompts** for multi-step workflows
+
+</v-clicks>
+
+---
+
+# Skill Locations
+
+<v-clicks>
+
+| Scope | Location | Use Case |
+|-------|----------|----------|
+| **User** | `~/.codex/skills/` | Personal workflows |
+| **Repository** | `.codex/skills/` | Team-shared skills |
+| **Admin** | System-managed | Enterprise policies |
+
+Skills load in precedence order: repo → user → admin
+
+</v-clicks>
+
+---
+
+# Skill Structure
+
+```
+my-skill/
+├── SKILL.md          # Required: YAML frontmatter + instructions
+├── SKILL.toml        # Optional: icons, brand color, defaults
+├── scripts/          # Optional: executable code
+├── references/       # Optional: documentation
+└── assets/           # Optional: templates, resources
+```
+
+---
+
+# SKILL.md Format
+
+```yaml
+---
+name: security-review
+description: >
+  Perform security analysis. Use when asked about vulnerabilities,
+  security audit, or "is this code secure".
+---
+
+# Security Review
+
+Analyze codebases for security vulnerabilities...
+
+## Workflow
+1. Reconnaissance - identify tech stack
+2. Dependency analysis - check for CVEs
+3. Code analysis - scan for patterns
+4. Generate report - create SECURITY_REVIEW.md
+```
+
+---
+
+# Invoking Skills
+
+## Explicit Invocation
+
+```bash
+# Use $ prefix to invoke directly
+$skill-creator Create a skill for commit messages
+$create-plan Design a new authentication system
+```
+
+## Implicit Invocation
+
+```bash
+# Codex auto-selects based on task match
+"Review this code for security vulnerabilities"
+# → Automatically invokes security-review skill if installed
+```
+
+---
+
+# Built-in Skills
+
+<v-clicks>
+
+- **$skill-creator** - Bootstrap new skills from description
+- **$skill-installer** - Install skills from catalog
+- **$create-plan** (experimental) - Research and plan features
+
+Install additional skills:
+```bash
+$skill-installer linear    # Linear integration
+$skill-installer notion    # Notion integration
+```
+
+</v-clicks>
+
+---
+
+# Creating a Skill
+
+```bash
+# Use the built-in skill creator
+$skill-creator Create a skill that generates
+conventional commit messages based on staged changes
+```
+
+Codex will:
+1. Create the skill folder structure
+2. Generate SKILL.md with appropriate metadata
+3. Add workflow instructions
+4. Suggest reference files if needed
+
+---
+
+# Skills vs Prompts
+
+| Aspect | Custom Prompts | Agent Skills |
+|--------|---------------|--------------|
+| **Location** | `~/.codex/prompts/` | `~/.codex/skills/` |
+| **Structure** | Single `.md` file | Folder with resources |
+| **Invocation** | Slash commands | `$skill-name` or auto |
+| **Resources** | Text only | Scripts, templates, refs |
+| **Sharing** | Copy files | Git-friendly folders |
+
+**Recommendation**: Use Skills for complex, multi-step workflows
+
+---
+
+# Skills: Claude Code vs Codex
+
+| Aspect | Claude Code | Codex CLI |
+|--------|-------------|-----------|
+| Spec | agentskills.io | agentskills.io |
+| Format | SKILL.md + YAML | SKILL.md + YAML |
+| User Location | `~/.claude/skills/` | `~/.codex/skills/` |
+| Repo Location | `.claude/skills/` | `.codex/skills/` |
+| Invocation | Auto/explicit | `$skill-name` or auto |
+| Creator | skill-creator | `$skill-creator` |
+
+**Same spec, different paths!**
+
+---
 
 # Configuration Profiles
 
@@ -615,12 +783,12 @@ Usage: `./review-file.sh UserService.java security`
 # ~/.codex/config.toml
 
 [profiles.production]
-model = "gpt-4"
+model = "gpt-5.2-codex"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
 [profiles.development]
-model = "gpt-4o-mini"
+model = "gpt-5-codex-mini"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 ```
@@ -917,7 +1085,7 @@ model = "codellama"
 type = "azure-openai"
 api_key = "${AZURE_API_KEY}"
 endpoint = "https://myinstance.openai.azure.com"
-deployment = "gpt-4"
+deployment = "gpt-5-codex"
 ```
 
 ---
@@ -1002,13 +1170,11 @@ npm run build
 
 ```toml
 # ~/.codex/config.toml
-model = "gpt-4o"
+model = "gpt-5.2-codex"
 model_provider = "openai"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
-
-[tools]
-web_search = true
+web_search_request = true
 ```
 
 ---
@@ -1380,10 +1546,10 @@ cd ~/.codex/prompts && git pull
 
 ```toml
 [profiles.quick]
-model = "gpt-3.5-turbo"  # Fast responses
+model = "gpt-5-codex-mini"  # Fast responses
 
 [profiles.complex]
-model = "gpt-4"  # Complex reasoning
+model = "gpt-5.2-codex"  # Complex reasoning
 ```
 
 ---
@@ -1599,11 +1765,28 @@ done
 
 ---
 
-# Recent Features (v0.30-0.39)
+# Recent Features (v0.40-0.87)
 
 ---
 
-# Version 0.30-0.39 Highlights
+# Version 0.40-0.87 Highlights
+
+<v-clicks>
+
+- **Agent Skills** (v0.76) - Reusable instruction bundles
+- **GPT-5.2-Codex** (v0.81) - New default API model
+- **Project-local config** (v0.78) - `.codex/config.toml` per-repo
+- **Multi-agent control** (v0.79) - Spawn/message conversations
+- **Thread rollback** (v0.79) - Undo last N turns
+- **Elevated sandbox** (v0.80) - `/elevate-sandbox` command
+- **Ctrl+G editor** (v0.78) - Open prompt in external editor
+- **Enterprise MDM** (v0.78) - Managed configuration on macOS
+
+</v-clicks>
+
+---
+
+# Earlier Features (v0.30-0.39)
 
 <v-clicks>
 
@@ -1613,9 +1796,6 @@ done
 - Network allowlists for testing (v0.36)
 - Simplified MCP server: `codex mcp` (v0.37)
 - Hierarchical AGENTS.md cascading (v0.39)
-- Enhanced error handling
-- Improved session management
-- Performance optimizations
 
 </v-clicks>
 
@@ -1719,49 +1899,41 @@ in v0.36+ (check release notes)
 
 ---
 
-# Q1 2025 Roadmap
+# What Shipped in 2025
 
 <v-clicks>
 
-- Plugin ecosystem
-- Visual Studio Code extension
-- Enhanced MCP marketplace
+- **Agent Skills** - Reusable instruction bundles (Dec 2025)
+- **VS Code Extension** - IDE integration shipped
+- **Codex Cloud** - Launch cloud tasks from CLI
+- **Multi-agent coordination** - Thread spawning and messaging
+- **GPT-5 Model Family** - 5.2-Codex, 5.1-Codex-Max, Mini
 
 </v-clicks>
 
 ---
 
-# Q2 2025 Roadmap
+# What's Coming (2026)
 
 <v-clicks>
 
-- Multi-agent coordination
-- Real-time collaboration
-- Advanced code analysis
+- Enhanced skills marketplace
+- Deeper IDE integrations
+- Advanced collaboration features
+- Extended platform support
 
 </v-clicks>
 
 ---
 
-# Future Vision
-
-<v-clicks>
-
-- Voice control integration
-- AR/VR code visualization
-- Quantum computing support
-
-</v-clicks>
-
----
-
-# Community Contributions
+# Community & Ecosystem
 
 <v-clicks>
 
 - Open source at github.com/openai/codex
-- Feature requests welcome
-- Plugin development SDK coming
+- 56k+ GitHub stars, 400+ releases
+- Skills catalog at github.com/openai/skills
+- Active discussions and contributions welcome
 
 </v-clicks>
 
@@ -1889,13 +2061,15 @@ Many advanced tips including:
 # Additional Resources
 
 ## Official Sources
+- [Codex CLI Documentation](https://developers.openai.com/codex/cli/)
+- [Agent Skills Guide](https://developers.openai.com/codex/skills/)
 - [Codex GitHub Repository](https://github.com/openai/codex)
-- [Codex Documentation](https://github.com/openai/codex/tree/main/docs)
-- [Model Context Protocol](https://modelcontextprotocol.io)
+- [Skills Catalog](https://github.com/openai/skills)
 
-## Community
+## Specifications & Community
+- [agentskills.io](https://agentskills.io) - Skills specification
+- [Model Context Protocol](https://modelcontextprotocol.io)
 - [Codex Discussions](https://github.com/openai/codex/discussions)
-- [MCP Registry](https://modelcontextprotocol.io/registry)
 
 ## Related Training
 - [Claude Code Training](https://github.com/anthropics/claude-code)

@@ -11,6 +11,7 @@ This 5-hour hands-on workshop covers everything from basic installation to advan
 - 🚀 **Installation & Setup**: Multiple authentication methods, configuration strategies
 - 🛡️ **Safety & Security**: Sandbox modes, approval policies, secure configurations
 - 🎯 **Core Features**: Project memory (AGENTS.md), custom prompts, profiles
+- ⚡ **Agent Skills**: Reusable workflow bundles (NEW in v0.76!)
 - 🔧 **Advanced Capabilities**: MCP integration, multi-model support, CI/CD workflows
 - 💻 **Practical Skills**: Real-world exercises in Java, Python, and TypeScript
 
@@ -48,8 +49,8 @@ codex-training/
 # Via npm (recommended)
 npm install -g @openai/codex
 
-# Via Homebrew
-brew install codex
+# Via Homebrew (macOS/Linux)
+brew install --cask codex
 
 # Verify installation
 codex --version
@@ -134,19 +135,26 @@ Build an event-driven microservices system with:
 - ✅ Custom prompts and profiles
 - ✅ Session management and resumption
 
+### Agent Skills (NEW in v0.76!)
+- ✅ Creating reusable skill bundles
+- ✅ SKILL.md format and structure
+- ✅ Explicit (`$skill-name`) and implicit invocation
+- ✅ Built-in skills: `$skill-creator`, `$skill-installer`
+- ✅ Skills vs prompts comparison
+
 ### Advanced Features
 - ✅ Model Context Protocol (MCP)
-- ✅ Multi-model provider support (OpenAI, Anthropic, Ollama)
+- ✅ Multi-model provider support (GPT-5.2-Codex, Anthropic, Ollama)
 - ✅ Running as MCP server
 - ✅ CI/CD integration
 - ✅ Headless execution
 
 ### Configuration
 - ✅ TOML configuration files
+- ✅ Project-local config (`.codex/config.toml`)
 - ✅ Environment variables
 - ✅ Shell environment policies
 - ✅ Notification systems
-- ✅ Logging and debugging
 
 ## Tips for Success
 
@@ -162,26 +170,35 @@ Build an event-driven microservices system with:
 ```bash
 # Basic usage
 codex                          # Interactive mode
-codex -n "prompt"             # Non-interactive
-codex --resume                # Resume last session
-codex --search "text"         # Search codebase
+codex "prompt"                 # Start with initial prompt
+codex exec "prompt"            # Execute and exit
+codex resume                   # Resume session picker
+codex resume --last            # Resume most recent session
+
+# Agent Skills
+$skill-creator                 # Create new skill
+$skill-installer <name>        # Install skill from catalog
+$create-plan                   # Research and plan features
 
 # Configuration
 codex --profile dev           # Use specific profile
-codex --sandbox-mode auto     # Set sandbox mode
-codex --approval-policy never # Set approval policy
+codex --sandbox read-only     # Set sandbox mode
+codex --model gpt-5.2-codex   # Select model
 
 # Advanced
-codex serve                   # Run as MCP server
-codex doctor                  # Diagnose issues
+codex mcp                     # Run as MCP server
+codex cloud exec              # Launch cloud task
 codex login --headless        # Headless authentication
-codex --list-sessions         # Show all sessions
 ```
 
 ## Resources
 
-- [Official Codex Documentation](https://github.com/openai/codex/docs)
+- [Official Codex Documentation](https://developers.openai.com/codex/cli/)
+- [Codex GitHub Repository](https://github.com/openai/codex)
+- [Agent Skills Documentation](https://developers.openai.com/codex/skills/)
+- [Skills Catalog](https://github.com/openai/skills)
 - [Model Context Protocol](https://modelcontextprotocol.io)
+- [agentskills.io Specification](https://agentskills.io)
 - [Course Slides](./slides.md)
 - [Exercise Solutions](./exercises/)
 
