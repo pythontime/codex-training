@@ -1,0 +1,354 @@
+# Codex CLI Troubleshooting Guide
+
+Quick solutions to common issues you may encounter during the training.
+
+---
+
+## Installation Issues
+
+### "codex: command not found"
+
+**Cause:** Codex not in PATH or not installed correctly.
+
+```bash
+# Check if installed
+which codex
+
+# Reinstall via Homebrew (macOS)
+brew reinstall --cask codex
+
+# Or via npm
+npm uninstall -g @openai/codex
+npm install -g @openai/codex
+
+# Verify installation
+codex --version
+```
+
+### "Error: EACCES permission denied"
+
+**Cause:** npm global directory permission issues.
+
+```bash
+# Fix npm permissions (recommended)
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# Reinstall
+npm install -g @openai/codex
+```
+
+---
+
+## Authentication Issues
+
+### "Authentication failed" or "Invalid API key"
+
+```bash
+# Clear cached credentials
+rm -rf ~/.codex/auth
+
+# Re-authenticate with ChatGPT account
+codex login
+
+# Or set API key directly
+export OPENAI_API_KEY="sk-..."
+```
+
+### "Rate limit exceeded"
+
+**Cause:** Too many requests in a short period.
+
+```bash
+# Wait 60 seconds and retry
+# Or switch to a different model
+codex --model gpt-5-codex-mini
+
+# Check your rate limits
+cat ~/.codex/config.toml | grep rate
+```
+
+### Login hangs in headless environment
+
+```bash
+# Use headless login for SSH/CI environments
+codex login --headless
+
+# Follow the URL and enter the code manually
+```
+
+---
+
+## Sandbox Issues
+
+### "Operation not permitted" in sandbox mode
+
+**Cause:** Sandbox is blocking the operation.
+
+```bash
+# Check current sandbox mode
+grep sandbox_mode ~/.codex/config.toml
+
+# Temporarily elevate (interactive)
+# Type /elevate-sandbox in Codex
+
+# Or start with full access (use cautiously)
+codex --sandbox full-access
+```
+
+### "Cannot write to file outside workspace"
+
+**Cause:** `workspace-write` sandbox restricts writes to current directory.
+
+```bash
+# Option 1: Navigate to the target directory first
+cd /path/to/project
+codex
+
+# Option 2: Use full-access mode
+codex --sandbox full-access
+```
+
+---
+
+## MCP (Model Context Protocol) Issues
+
+### "MCP server failed to start"
+
+```bash
+# Test the MCP server directly
+npx @modelcontextprotocol/server-github --help
+
+# Check environment variables
+echo $GITHUB_TOKEN
+
+# Verify config syntax
+cat ~/.codex/config.toml | grep -A5 mcp_servers
+```
+
+### "MCP server timeout"
+
+**Cause:** Server taking too long to initialize.
+
+```toml
+# Add timeout configuration in config.toml
+[mcp_servers.github]
+command = "npx"
+args = ["@modelcontextprotocol/server-github"]
+startup_timeout_ms = 30000  # Increase timeout
+```
+
+### "Tool not found" from MCP server
+
+```bash
+# List available tools from the server
+codex "List all available MCP tools"
+
+# Check server is loaded
+codex "What MCP servers are connected?"
+```
+
+---
+
+## Session Issues
+
+### "Session context too long"
+
+**Cause:** Conversation exceeded context window.
+
+```bash
+# Start a fresh session
+codex
+
+# Or resume a specific session point
+codex resume
+# Select an earlier checkpoint
+```
+
+### "Cannot resume session"
+
+```bash
+# List available sessions
+codex resume
+
+# If corrupted, clear session data
+rm -rf ~/.codex/sessions/*
+
+# Start fresh
+codex
+```
+
+---
+
+## Model Issues
+
+### "Model not available"
+
+```bash
+# Check available models
+codex --model list
+
+# Use a fallback model
+codex --model gpt-5-codex-mini
+
+# Check your API access level
+curl https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+```
+
+### "Unexpected model behavior"
+
+```bash
+# Check current model
+grep model ~/.codex/config.toml
+
+# Try with explicit model
+codex --model gpt-5.2-codex
+
+# Use a profile with known-good settings
+codex --profile production
+```
+
+---
+
+## Performance Issues
+
+### Codex is slow
+
+1. **Check network connection**
+   ```bash
+   ping api.openai.com
+   ```
+
+2. **Try a faster model**
+   ```bash
+   codex --model gpt-5-codex-mini
+   ```
+
+3. **Reduce context size**
+   ```toml
+   # In config.toml
+   project_doc_max_bytes = 16384  # Smaller AGENTS.md limit
+   ```
+
+4. **Check for MCP server issues**
+   ```bash
+   # Temporarily disable MCP
+   mv ~/.codex/config.toml ~/.codex/config.toml.bak
+   codex  # Test without MCP
+   ```
+
+### High token usage
+
+```bash
+# Use mini model for simple tasks
+codex --model gpt-5-codex-mini
+
+# Be specific in prompts (shorter responses)
+codex "Fix the bug on line 42"  # vs "Review the whole file"
+```
+
+---
+
+## Exercise-Specific Issues
+
+### Spring Boot won't start
+
+```bash
+# Check Java version (need 17+)
+java -version
+
+# Clean and rebuild
+./mvnw clean install -DskipTests
+
+# Check for port conflicts
+lsof -i :8080
+```
+
+### Python dependencies fail
+
+```bash
+# Use virtual environment
+python -m venv venv
+source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+
+# Upgrade pip
+pip install --upgrade pip
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Docker containers won't start
+
+```bash
+# Check Docker is running
+docker ps
+
+# Reset containers
+docker-compose down -v
+docker-compose up -d
+
+# Check logs
+docker-compose logs rabbitmq
+```
+
+### React tests fail
+
+```bash
+# Clear node_modules
+rm -rf node_modules package-lock.json
+npm install
+
+# Run tests with verbose output
+npm test -- --verbose
+```
+
+---
+
+## Getting Help
+
+### Collect diagnostic information
+
+```bash
+# Codex version
+codex --version
+
+# Configuration
+cat ~/.codex/config.toml
+
+# Recent logs (if logging enabled)
+tail -100 ~/.codex/log/codex.log
+```
+
+### Reset to defaults
+
+```bash
+# Backup current config
+mv ~/.codex ~/.codex.backup
+
+# Codex will create fresh defaults
+codex
+```
+
+### Report issues
+
+1. Check [GitHub Issues](https://github.com/openai/codex/issues)
+2. Include: version, OS, config (redact API keys), error message
+3. Provide minimal reproduction steps
+
+---
+
+## Quick Reference
+
+| Symptom | Likely Cause | Quick Fix |
+|---------|--------------|-----------|
+| "command not found" | Not installed | `brew install --cask codex` |
+| "Authentication failed" | Bad credentials | `rm -rf ~/.codex/auth && codex login` |
+| "Operation not permitted" | Sandbox restriction | `/elevate-sandbox` or `--sandbox full-access` |
+| "MCP server failed" | Missing env var | Check `$GITHUB_TOKEN` etc. |
+| "Rate limit exceeded" | Too many requests | Wait 60s or use mini model |
+| Slow responses | Large context | Reduce `project_doc_max_bytes` |
+| Session corrupted | Cache issue | `rm -rf ~/.codex/sessions/*` |
