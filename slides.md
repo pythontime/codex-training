@@ -167,10 +167,10 @@ Kousen IT, Inc.
 
 <v-clicks>
 
-- **GPT-5.2-Codex** - Latest, default for API (January 2026)
-- **GPT-5-Codex** - Stable workhorse model
-- **GPT-5-Codex-Mini** - Cost-effective, 4x more usage
-- **GPT-5.1-Codex-Max** - Long-running project-scale work
+- <span style="color: #00D4FF">**GPT-5.2-Codex**</span> - Latest, default for API (January 2026)
+- <span style="color: #00D4FF">**GPT-5-Codex**</span> - Stable workhorse model
+- <span style="color: #00D4FF">**GPT-5-Codex-Mini**</span> - Cost-effective, 4x more usage
+- <span style="color: #00D4FF">**GPT-5.1-Codex-Max**</span> - Long-running project-scale work
 - Anthropic Claude via API
 - Local models via Ollama
 
@@ -521,7 +521,7 @@ codex --dangerously-bypass-approvals-and-sandbox
 
 <v-clicks>
 
-- Place `AGENTS.md` in project root
+- Place <span style="color: #00D4FF">`AGENTS.md`</span> in project root
 - Loaded automatically with first prompt
 - Configurable size limit (default: 32KB)
 
@@ -637,20 +637,22 @@ Refactor the selected code following these principles:
 /perf-fix
 ```
 
-```bash
-/refactor
-/security-audit
-/test-gen
-/pr-review
-/api-upgrade
-/perf-fix
-```
-
 ---
 
 # Prompt Arguments Workaround
 
-Codex doesn't support `$ARGUMENTS` like Claude Code, but you can use shell scripts:
+<v-clicks>
+
+- Codex doesn't support <span style="color: #00D4FF">`$ARGUMENTS`</span> like Claude Code
+- Solution: Use shell scripts as wrappers
+- Scripts can accept parameters and build dynamic prompts
+- Store in <span style="color: #00D4FF">`~/.codex/scripts/`</span> for reuse
+
+</v-clicks>
+
+---
+
+# Prompt Arguments: Implementation
 
 ```bash
 #!/bin/bash
@@ -695,9 +697,9 @@ backgroundSize: cover
 <v-clicks>
 
 - **Reusable instruction bundles** with optional scripts and resources
-- **Follows agentskills.io spec** (same as Claude Code!)
+- **Follows <span style="color: #00D4FF">agentskills.io</span> spec** (same as Claude Code!)
 - **Progressive loading**: Only name/description loaded at startup
-- **Two invocation modes**: Explicit (`$skill-name`) or implicit (auto-detect)
+- **Two invocation modes**: Explicit (<span style="color: #00D4FF">`$skill-name`</span>) or implicit (auto-detect)
 - **Skills replace complex prompts** for multi-step workflows
 
 </v-clicks>
@@ -710,8 +712,8 @@ backgroundSize: cover
 
 | Scope | Location | Use Case |
 |-------|----------|----------|
-| **User** | `~/.codex/skills/` | Personal workflows |
-| **Repository** | `.codex/skills/` | Team-shared skills |
+| **User** | <span style="color: #00D4FF">`~/.codex/skills/`</span> | Personal workflows |
+| **Repository** | <span style="color: #00D4FF">`.codex/skills/`</span> | Team-shared skills |
 | **Admin** | System-managed | Enterprise policies |
 
 Skills load in precedence order: repo → user → admin
@@ -780,9 +782,9 @@ $create-plan Design a new authentication system
 
 <v-clicks>
 
-- **$skill-creator** - Bootstrap new skills from description
-- **$skill-installer** - Install skills from catalog
-- **$create-plan** (experimental) - Research and plan features
+- <span style="color: #00D4FF">**$skill-creator**</span> - Bootstrap new skills from description
+- <span style="color: #00D4FF">**$skill-installer**</span> - Install skills from catalog
+- <span style="color: #00D4FF">**$create-plan**</span> (experimental) - Research and plan features
 
 Install additional skills:
 ```bash
@@ -994,6 +996,23 @@ All extensions support:
 </v-clicks>
 
 ---
+layout: image-right
+image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80
+backgroundSize: cover
+---
+
+# Model Context Protocol
+
+<div class="mt-20">
+  <h2 class="text-4xl font-bold text-white bg-black bg-opacity-60 px-6 py-3 rounded-lg">
+    MCP Integration
+  </h2>
+  <p class="text-xl text-white bg-black bg-opacity-60 px-4 py-2 rounded mt-4">
+    Extend Codex with external tools
+  </p>
+</div>
+
+---
 
 # Model Context Protocol (MCP)
 
@@ -1163,6 +1182,23 @@ const client = new MCPClient({
 ```
 
 ---
+layout: image-right
+image: https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80
+backgroundSize: cover
+---
+
+# Multi-Model Support
+
+<div class="mt-20">
+  <h2 class="text-4xl font-bold text-white bg-black bg-opacity-60 px-6 py-3 rounded-lg">
+    Provider Flexibility
+  </h2>
+  <p class="text-xl text-white bg-black bg-opacity-60 px-4 py-2 rounded mt-4">
+    OpenAI, Anthropic, Ollama, Azure
+  </p>
+</div>
+
+---
 
 # Multi-Model Provider Support
 
@@ -1255,23 +1291,31 @@ file = "/path/to/custom.log"
 
 <v-clicks>
 
-- GitHub Actions skeleton lives in repo (`automation/github-actions.yml`)
-- Typical steps: checkout → install Codex → authenticate → `codex exec` tasks → upload artifacts
-- Cron ideas: weekly security sweep, dependency refresh, monthly cleanup (scripts provided)
+- GitHub Actions skeleton lives in repo (<span style="color: #00D4FF">`automation/github-actions.yml`</span>)
+- Typical steps: checkout → install Codex → authenticate → <span style="color: #00D4FF">`codex exec`</span> → upload artifacts
+- Cron ideas: weekly security sweep, dependency refresh, monthly cleanup
 - Guardrails: run on branches, review PRs before merge, notify on failures
 
 </v-clicks>
+
+---
+
+# CI/CD Pipeline Examples
 
 ```bash
 # Fail-fast pipeline
 git pull && \
 codex exec "migrate database schema" && \
 npm test
+```
 
+```bash
 # Weekly cron example
 0 2 * * 1 cd /path/to/repo && \
   codex exec "weekly security audit"
+```
 
+```bash
 # Chain commands to stop on failure
 npm install && \
 codex exec "fix any TypeScript errors" && \
@@ -1798,6 +1842,23 @@ model = "codellama"  # No API costs
 - Use local models for sensitive data
 
 </v-clicks>
+
+---
+layout: image-right
+image: https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80
+backgroundSize: cover
+---
+
+# Troubleshooting
+
+<div class="mt-20">
+  <h2 class="text-4xl font-bold text-white bg-black bg-opacity-60 px-6 py-3 rounded-lg">
+    Common Issues
+  </h2>
+  <p class="text-xl text-white bg-black bg-opacity-60 px-4 py-2 rounded mt-4">
+    Solutions and workarounds
+  </p>
+</div>
 
 ---
 
