@@ -53,3 +53,46 @@ codex exec "Run /security-audit on the UserService class"
 
 Codex doesn't currently support parameterized prompts like Claude Code's `$ARGUMENTS`.
 See `scripts/review-file.sh` for a workaround using shell scripts.
+
+---
+
+## Prompts vs Skills: When to Use Each
+
+Since December 2025, Codex supports **Agent Skills** - a more powerful alternative to custom prompts.
+
+| Aspect | Custom Prompts | Agent Skills |
+|--------|---------------|--------------|
+| **Structure** | Single `.md` file | Directory with `SKILL.md` + resources |
+| **Invocation** | `/prompt-name` | `$skill-name` or auto-detected |
+| **Resources** | Text only | Scripts, templates, reference docs |
+| **Sharing** | Copy file | Git-friendly directory |
+| **Complexity** | Simple templates | Multi-step workflows |
+
+### Use Custom Prompts When:
+- You need a quick, reusable instruction set
+- The task is straightforward (< 20 lines of instructions)
+- No supporting files or scripts are needed
+- You want fast, inline invocation
+
+### Use Agent Skills When:
+- The workflow has multiple steps or decision points
+- You need supporting resources (scripts, templates, examples)
+- You want team-wide sharing via repository
+- The task benefits from implicit auto-detection
+- You need to invoke external tools or scripts
+
+### Migrating to Skills
+
+To convert a prompt to a skill:
+
+```bash
+# Use the built-in skill creator
+$skill-creator Convert my /security-audit prompt to a skill
+
+# Or manually create:
+mkdir -p ~/.codex/skills/security-audit
+mv ~/.codex/prompts/security-audit.md ~/.codex/skills/security-audit/SKILL.md
+# Add YAML frontmatter to SKILL.md
+```
+
+See the [Agent Skills documentation](https://developers.openai.com/codex/skills/) for details.

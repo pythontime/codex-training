@@ -1,3 +1,19 @@
+# =============================================================================
+# SECURITY WARNING: DEVELOPMENT USE ONLY
+# =============================================================================
+# This docker-compose file uses default credentials for training purposes.
+# DO NOT use these credentials in production environments!
+#
+# Default credentials used:
+#   - RabbitMQ: admin/admin
+#   - PostgreSQL: postgres/postgres
+#   - MongoDB: mongo/mongo
+#
+# For production, use environment variables or secrets management:
+#   environment:
+#     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+# =============================================================================
+
 version: '3.8'
 
 services:

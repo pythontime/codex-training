@@ -1,0 +1,40 @@
+# OpenAI Codex CLI - Basic Configuration
+# Location: ~/.codex/config.toml
+#
+# This is a minimal configuration to get started.
+# See advanced-config.toml for all available options.
+
+# Model Selection
+# GPT-5.2-Codex is the latest and default model (January 2026)
+model = "gpt-5.2-codex"
+
+# Security Settings
+# on-request: Ask before executing commands (recommended for beginners)
+# never: Never ask (for experienced users)
+# on-failure: Only ask after errors
+approval_policy = "on-request"
+
+# Sandbox Mode
+# auto: Automatically determine based on operation risk
+# read-only: Only allow read operations
+# workspace-write: Allow writes only in current workspace
+# full-access: No restrictions (use with caution)
+sandbox_mode = "auto"
+
+# Project Documentation
+# Maximum bytes to read from AGENTS.md files
+project_doc_max_bytes = 32768
+
+# Web Search (optional)
+# Enable web search for up-to-date information
+web_search_request = true
+
+# That's it! This basic config is enough to get started.
+#
+# Next steps:
+# 1. Run: codex login
+# 2. Navigate to a project with an AGENTS.md file
+# 3. Start coding: codex "help me understand this codebase"
+#
+# For MCP servers, profiles, and advanced options,
+# see advanced-config.toml
