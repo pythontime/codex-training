@@ -26,19 +26,24 @@ This 5-hour hands-on workshop covers everything from basic installation to advan
 
 ```
 codex-training/
-├── slides.md                     # Slidev presentation
-├── exercises/                    # Hands-on labs
-│   ├── java-spring-boot/        # Spring Boot REST API
-│   ├── python-refactoring/      # Legacy code refactoring
-│   ├── react-forms/             # React TypeScript forms
-│   └── microservices/           # Multi-language microservices
+├── slides.md                     # Slidev presentation (160+ slides)
+├── exercises/                    # Hands-on labs with starter code
+│   ├── java-spring-boot/        # Lab 1: Spring Boot REST API
+│   ├── python-refactoring/      # Lab 2: Legacy code refactoring
+│   ├── react-forms/             # Lab 3: React TypeScript forms
+│   ├── microservices/           # Lab 4: Multi-language microservices
+│   └── skills-creation/         # Lab 5: Create custom Codex skills
 ├── config-examples/              # Sample configurations
-│   ├── basic-config.toml        # Minimal setup
-│   ├── advanced-config.toml     # Full features
-│   └── mcp-servers.toml         # MCP configurations
-└── scripts/                      # Utility scripts
-    ├── setup.sh                  # Environment setup
-    └── verify-install.sh         # Installation check
+│   ├── basic-config.toml        # Minimal setup for beginners
+│   └── advanced-config.toml     # Full features with MCP, profiles
+├── prompts/                      # Custom prompt templates
+│   └── *.md                     # security-audit, test-gen, etc.
+├── docs/                         # Reference documentation
+│   ├── TROUBLESHOOTING.md       # Common issues and solutions
+│   └── MODEL-SELECTION.md       # Cost/performance guide
+├── .github/workflows/            # CI/CD examples
+│   └── codex-review.yml         # Automated PR review with Codex
+└── exports/                      # Slide exports (PDF)
 ```
 
 ## Quick Start
@@ -126,6 +131,14 @@ Build an event-driven microservices system with:
 
 **Time**: 90-120 minutes
 
+### Lab 5: Skills Creation
+Create a custom Codex skill using `$skill-creator`:
+- SKILL.md format with YAML frontmatter
+- Conventional commit message generator
+- Team sharing via repository
+
+**Time**: 30 minutes
+
 ## Key Codex Features Covered
 
 ### Core Features
@@ -193,14 +206,19 @@ codex login --headless        # Headless authentication
 
 ## Resources
 
-- [Official Codex Documentation](https://developers.openai.com/codex/cli/)
+### Course Materials
+- [Course Slides](./slides.md) - Full Slidev presentation
+- [Exercises](./exercises/) - Hands-on labs with starter code
+- [Troubleshooting Guide](./docs/TROUBLESHOOTING.md) - Common issues and solutions
+- [Model Selection Guide](./docs/MODEL-SELECTION.md) - Cost/performance optimization
+
+### Official Documentation
+- [Codex CLI Documentation](https://developers.openai.com/codex/cli/)
 - [Codex GitHub Repository](https://github.com/openai/codex)
 - [Agent Skills Documentation](https://developers.openai.com/codex/skills/)
 - [Skills Catalog](https://github.com/openai/skills)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [agentskills.io Specification](https://agentskills.io)
-- [Course Slides](./slides.md)
-- [Exercise Solutions](./exercises/)
 
 ## Instructor
 
