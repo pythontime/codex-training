@@ -506,12 +506,14 @@ graph LR
 # Set sandbox mode
 codex --sandbox read-only
 
-# Set approval policy
+# Set approval policy (equivalent to approval_policy in config)
 codex --ask-for-approval on-request
 
 # Bypass all safety (dangerous!)
 codex --dangerously-bypass-approvals-and-sandbox
 ```
+
+CLI flags override config file settings for the session.
 
 ---
 
@@ -1212,7 +1214,7 @@ backgroundSize: cover
 [providers.anthropic]
 type = "anthropic"
 api_key = "${ANTHROPIC_API_KEY}"
-model = "claude-3-opus-20240229"
+model = "claude-sonnet-4-20250514"
 ```
 
 ---
@@ -1962,8 +1964,8 @@ endpoint = "http://metrics.internal:9090"
 # Log Analysis
 
 ```bash
-# Parse JSON logs
-cat ~/.codex/log/codex-tui.log | jq '.level == "error"'
+# Filter JSON logs for errors
+cat ~/.codex/log/codex-tui.log | jq 'select(.level == "error")'
 
 # Monitor in real-time
 tail -f ~/.codex/log/codex-tui.log | grep ERROR
@@ -2330,7 +2332,7 @@ For teams using both tools:
 
 | Aspect | Codex CLI | Claude Code |
 |--------|-----------|-------------|
-| **Model** | GPT-5.2-Codex | Claude Opus 4.5 |
+| **Model** | GPT-5.2-Codex | Claude Sonnet 4 |
 | **Runtime** | Rust | TypeScript |
 | **Memory File** | AGENTS.md | CLAUDE.md |
 | **Skills Location** | `~/.codex/skills/` | `~/.claude/skills/` |
