@@ -104,7 +104,7 @@ cd analytics-service && ./mvnw clean install && cd ..
 The starter includes:
 - Docker Compose configuration for RabbitMQ, PostgreSQL, MongoDB, Redis
 
-You'll use Codex to create the service directories (auth-service, order-service, notification-service, analytics-service) and implement each microservice.
+You'll use Codex to implement each microservice in the provided service directories (auth-service, order-service, notification-service, analytics-service).
 
 **Your Task**: Use Codex to implement a complete microservices system.
 

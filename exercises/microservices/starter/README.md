@@ -51,8 +51,8 @@ starter/
 
 The `docker-compose.yml` in the parent directory provides:
 - RabbitMQ (message queue)
-- PostgreSQL (order service)
-- MongoDB (inventory service)
+- PostgreSQL (auth and order services)
+- MongoDB (analytics service)
 - Redis (caching)
 
 ```bash

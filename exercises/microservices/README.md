@@ -212,9 +212,23 @@ WS   /api/analytics/realtime
 
 ## Docker Compose Configuration
 
+The starter `docker-compose.yml` provides infrastructure only (RabbitMQ, PostgreSQL, MongoDB, Redis). You'll use Codex to extend it with application services:
+
 ```yaml
+# Target configuration (what you'll build toward)
 version: '3.8'
 services:
+  # Infrastructure (provided in starter)
+  rabbitmq:
+    image: rabbitmq:3-management
+  postgres:
+    image: postgres:15
+  mongodb:
+    image: mongo:6
+  redis:
+    image: redis:7
+
+  # Application services (you'll add these)
   auth-service:
     build: ./auth-service
     environment:
@@ -239,18 +253,6 @@ services:
     environment:
       - MONGODB_URL=...
       - RABBITMQ_URL=...
-
-  rabbitmq:
-    image: rabbitmq:3-management
-
-  postgres:
-    image: postgres:15
-
-  mongodb:
-    image: mongo:6
-
-  redis:
-    image: redis:7
 
   nginx:
     build: ./nginx
