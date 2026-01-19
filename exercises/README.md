@@ -2,41 +2,39 @@
 
 This directory contains hands-on exercises for learning OpenAI Codex CLI.
 
-## Exercise Categories
+## Available Exercises
 
-### 1. Generate from Scratch
-- `java-spring-boot/` - Build a complete REST API
-- `python-cli-tool/` - Create a command-line application
-- `react-dashboard/` - Develop a modern dashboard
+### Lab 1: Generate from Scratch
+- `java-spring-boot/` - Build a complete REST API with Spring Boot
 
-### 2. Refactor Existing Code
-- `java-legacy-modernization/` - Modernize legacy Java code
-- `python-refactoring/` - Improve Python code quality
-- `typescript-migration/` - Migrate JavaScript to TypeScript
+### Lab 2: Refactor Existing Code
+- `python-refactoring/` - Improve legacy Python code quality
 
-### 3. Multi-Language Projects
-- `microservices/` - Build a microservices architecture
-- `fullstack-app/` - Complete full-stack application
-- `data-pipeline/` - Create a data processing pipeline
+### Lab 3: Frontend Development
+- `react-forms/` - Build production-ready React TypeScript forms
 
-### 4. Agent Skills
-- `skills-creation/` - Create a custom skill for commit messages
+### Lab 4: Multi-Language Projects
+- `microservices/` - Build an event-driven microservices architecture
+
+### Lab 5: Agent Skills
+- `skills-creation/` - Create a custom Codex skill for commit messages
 
 ## Getting Started
 
 Each exercise directory contains:
-- `README.md` - Exercise instructions
-- `starter/` - Initial code (if applicable)
-- `solution/` - Reference implementation
-- `AGENTS.md` - Project context for Codex
-- `tests/` - Test specifications
+- `README.md` - Exercise instructions and Codex prompt progression
+- `starter/` - Initial code to work with (most exercises)
+- `AGENTS.md` - Project context for Codex (most exercises)
+
+Note: These are hands-on exercises where you build the solution using Codex. Reference implementations are not provided—the goal is to practice using Codex to generate and refactor code.
 
 ## Recommended Order
 
-1. Start with simple generation tasks
-2. Move to refactoring exercises
-3. Tackle multi-language projects
-4. Try advanced integration scenarios
+1. **Lab 1** - Java Spring Boot (generation)
+2. **Lab 2** - Python Refactoring (code improvement)
+3. **Lab 3** - React Forms (frontend development)
+4. **Lab 4** - Microservices (multi-language, advanced)
+5. **Lab 5** - Skills Creation (extending Codex)
 
 ## Using Codex for Exercises
 
@@ -74,7 +72,7 @@ codex
 
 ## Need Help?
 
-- Check the `solution/` directory for reference
 - Review the main slides for concept explanations
 - Use `codex "explain this error"` for debugging
+- Check the exercise README for step-by-step Codex prompts
 - Ask in the workshop chat or discussions

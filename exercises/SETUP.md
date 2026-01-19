@@ -9,9 +9,10 @@ This directory contains hands-on exercises for learning OpenAI Codex CLI. Each e
 ```
 exercises/
 ├── java-spring-boot/      # Lab 1: REST API Development
-├── python-refactoring/     # Lab 2: Code Refactoring
+├── python-refactoring/    # Lab 2: Code Refactoring
 ├── react-forms/           # Lab 3: Frontend Development
-└── microservices/         # Lab 4: Distributed Systems
+├── microservices/         # Lab 4: Distributed Systems
+└── skills-creation/       # Lab 5: Custom Codex Skills
 ```
 
 ## Prerequisites
@@ -64,8 +65,7 @@ pip install -r requirements.txt
 ```
 
 The starter includes:
-- `legacy_code.py` - Poorly written code that needs refactoring
-- `sample_data.csv` - Test data for the data processor
+- `legacy_processor.py` - Poorly written code that needs refactoring
 - `requirements.txt` - All necessary Python packages
 
 **Your Task**: Use Codex to refactor the legacy code following modern Python best practices.
@@ -103,10 +103,20 @@ cd analytics-service && ./mvnw clean install && cd ..
 
 The starter includes:
 - Docker Compose configuration for RabbitMQ, PostgreSQL, MongoDB, Redis
-- Basic service skeletons in Node.js, Python, Go, and Java
-- Health check endpoints for each service
+
+You'll use Codex to create the service directories (auth-service, order-service, notification-service, analytics-service) and implement each microservice.
 
 **Your Task**: Use Codex to implement a complete microservices system.
+
+### Lab 5: Skills Creation
+
+```bash
+cd skills-creation
+```
+
+This lab teaches you to create custom Codex skills. No starter code is needed—you'll use the built-in `$skill-creator` skill to bootstrap your own skill.
+
+**Your Task**: Create a custom skill that generates conventional commit messages.
 
 ## Using Codex for Exercises
 

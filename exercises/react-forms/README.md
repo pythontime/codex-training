@@ -38,8 +38,6 @@ Build a registration system that includes:
 5. **Testing**
    - Unit tests with Jest
    - Component tests with React Testing Library
-   - E2E tests with Playwright
-   - Accessibility tests
 
 6. **Performance**
    - Code splitting
@@ -133,8 +131,7 @@ src/
 - React Hook Form
 - Zod
 - Tailwind CSS
-- React Testing Library
-- Playwright
+- Jest + React Testing Library
 
 ## Form Features to Implement
 
@@ -207,14 +204,17 @@ npm run test
 # Coverage
 npm run test:coverage
 
-# E2E tests
-npm run test:e2e
-
-# Accessibility audit
-npm run test:a11y
-
 # Build
 npm run build
+```
+
+### Advanced Testing (Optional)
+
+Use Codex to add E2E and accessibility testing:
+
+```bash
+codex "Add Playwright for E2E testing with test:e2e script"
+codex "Add axe-core for accessibility testing with test:a11y script"
 ```
 
 ## Example Codex Session

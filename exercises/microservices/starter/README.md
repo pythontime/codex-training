@@ -6,45 +6,46 @@ This is the starting point for Lab 4: Microservices Architecture.
 
 ```
                     ┌─────────────────┐
+                    │   nginx/Kong    │
                     │   API Gateway   │
-                    │   (Node.js)     │
                     └────────┬────────┘
                              │
-        ┌────────────────────┼────────────────────┐
-        │                    │                    │
-        ▼                    ▼                    ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│ Order Service │   │   Inventory   │   │ Notification  │
-│   (Python)    │   │   (Go/Java)   │   │   (Node.js)   │
-└───────┬───────┘   └───────┬───────┘   └───────────────┘
-        │                   │                    ▲
-        │                   │                    │
-        └───────────┬───────┘                    │
-                    ▼                            │
-            ┌───────────────┐                    │
-            │   RabbitMQ    │────────────────────┘
-            └───────────────┘
+    ┌────────────┬───────────┼───────────┬────────────┐
+    │            │           │           │            │
+    ▼            ▼           ▼           ▼            ▼
+┌────────┐ ┌─────────┐ ┌───────────┐ ┌──────────┐ ┌─────────┐
+│  Auth  │ │  Order  │ │Notification│ │Analytics │ │ Message │
+│Node.js │ │ Python  │ │    Go     │ │  Java    │ │  Queue  │
+└────┬───┘ └────┬────┘ └─────┬─────┘ └────┬─────┘ │RabbitMQ │
+     │          │            │            │       └────┬────┘
+     │          └────────────┴────────────┴────────────┘
+     │                       │
+     ▼                       ▼
+┌──────────┐          ┌───────────┐
+│PostgreSQL│          │  MongoDB  │
+└──────────┘          └───────────┘
 ```
 
 ## Directory Structure
 
-Each service gets its own directory:
+You'll create these service directories:
 
 ```
 starter/
-├── api-gateway/       # Node.js Express gateway
-├── order-service/     # Python FastAPI service
-├── inventory-service/ # Go or Java service
-├── notification-service/ # Node.js event consumer
+├── auth-service/         # Node.js/Express with JWT
+├── order-service/        # Python/FastAPI
+├── notification-service/ # Go with RabbitMQ consumer
+├── analytics-service/    # Java/Spring Boot
+├── nginx/                # API Gateway config
 └── README.md
 ```
 
 ## What You'll Build
 
-1. **API Gateway** - Route requests, authentication, rate limiting
-2. **Order Service** - Create/manage orders, publish events
-3. **Inventory Service** - Stock management, consume order events
-4. **Notification Service** - Send emails/SMS on order events
+1. **Auth Service** (Node.js) - JWT authentication, user management
+2. **Order Service** (Python) - Order CRUD, payment integration, event publishing
+3. **Notification Service** (Go) - Email/SMS on order events, RabbitMQ consumer
+4. **Analytics Service** (Java) - Real-time metrics, MongoDB aggregations
 
 ## Infrastructure
 
@@ -64,8 +65,18 @@ open http://localhost:15672  # admin/admin
 
 ## First Codex Prompt
 
+Start with the auth service:
+
 ```bash
-codex "Create a Python FastAPI order service with endpoints for 
-creating orders, getting order status, and publishing order events 
+codex "Create a Node.js auth service with Express, JWT authentication,
+user registration/login endpoints, and PostgreSQL for user storage.
+Include password hashing with bcrypt and refresh token support."
+```
+
+Then build the order service:
+
+```bash
+codex "Create a Python FastAPI order service with endpoints for
+creating orders, getting order status, and publishing order events
 to RabbitMQ when orders are created."
 ```

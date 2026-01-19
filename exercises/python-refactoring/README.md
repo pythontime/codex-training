@@ -5,12 +5,12 @@ Use Codex to refactor legacy Python code into modern, maintainable, and well-tes
 
 ## Starting Code
 
-The `legacy_code.py` file contains poorly written calculator and data processing code that needs significant improvement.
+The `starter/legacy_processor.py` file contains poorly written data processing code that needs significant improvement.
 
 ## Refactoring Goals
 
 1. **Type Hints**
-   - Add comprehensive type hints using Python 3.10+ syntax
+   - Add comprehensive type hints using Python 3.9+ syntax
    - Use typing module features (Optional, Union, List, Dict, etc.)
    - Add mypy configuration
 
@@ -49,12 +49,12 @@ The `legacy_code.py` file contains poorly written calculator and data processing
 
 ### Step 1: Analyze Current Code
 ```bash
-codex "Analyze legacy_code.py and create a refactoring plan identifying all issues and improvements needed"
+codex "Analyze legacy_processor.py and create a refactoring plan identifying all issues and improvements needed"
 ```
 
 ### Step 2: Add Type Hints
 ```bash
-codex "Add comprehensive type hints to all functions and classes using modern Python 3.10+ syntax"
+codex "Add comprehensive type hints to all functions and classes using modern Python 3.9+ syntax"
 ```
 
 ### Step 3: Restructure with Design Patterns
@@ -159,7 +159,7 @@ make all
 ```toml
 [tool.black]
 line-length = 88
-target-version = ['py310']
+target-version = ['py39']
 
 [tool.isort]
 profile = "black"

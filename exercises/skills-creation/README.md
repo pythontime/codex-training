@@ -1,4 +1,4 @@
-# Lab 7: Skills Creation
+# Lab 5: Skills Creation
 
 ## Objective
 Use Codex to create a custom skill that generates conventional commit messages following team standards.
