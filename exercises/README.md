@@ -19,6 +19,9 @@ This directory contains hands-on exercises for learning OpenAI Codex CLI.
 - `fullstack-app/` - Complete full-stack application
 - `data-pipeline/` - Create a data processing pipeline
 
+### 4. Agent Skills
+- `skills-creation/` - Create a custom skill for commit messages
+
 ## Getting Started
 
 Each exercise directory contains:

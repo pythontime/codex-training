@@ -321,6 +321,38 @@ Time elapsed: 12m 34s
 
 ---
 
+# /review Command (v0.76+)
+
+Launch code review without modifying your working tree:
+
+```bash
+# Review uncommitted changes
+/review
+
+# Review with specific focus
+/review Check for security vulnerabilities
+
+# Review changes against a branch
+/review Compare with main branch
+```
+
+---
+
+# Built-in Reviewers
+
+<v-clicks>
+
+- **Security** - OWASP patterns, injection risks
+- **Performance** - N+1 queries, memory leaks
+- **Style** - Naming conventions, code structure
+- **Tests** - Coverage gaps, edge cases
+
+Reviewers analyze diffs without executing code
+
+</v-clicks>
+
+---
+
 # Search Your Codebase
 
 ```bash
@@ -375,6 +407,38 @@ codex
 - Automatic web search when needed
 - Current information beyond training cutoff
 - Verify solutions with official docs
+
+</v-clicks>
+
+---
+
+# Image Inputs
+
+Attach screenshots and design specs for visual context:
+
+```bash
+# From command line
+codex -i screenshot.png "Explain this error"
+codex -i mockup.png "Implement this design"
+codex -i diagram.png "Generate code for this architecture"
+
+# Multiple images
+codex -i error.png -i logs.png "Debug this issue"
+```
+
+---
+
+# Image Input Use Cases
+
+<v-clicks>
+
+- **Debug UI errors** - Share error dialogs, stack traces
+- **Implement designs** - Convert mockups to code
+- **Analyze diagrams** - Generate from architecture docs
+- **Review screenshots** - Identify accessibility issues
+- **Compare outputs** - "Why does this look different?"
+
+Paste images directly in the TUI composer!
 
 </v-clicks>
 
@@ -881,6 +945,56 @@ backgroundSize: cover
 
 ---
 
+# Codex Cloud
+
+Run long tasks without tying up your terminal:
+
+```bash
+# Launch a cloud task
+codex cloud exec --env my-env "Refactor authentication module"
+
+# Check task status
+codex cloud status
+
+# List running tasks
+codex cloud list
+```
+
+---
+
+# Codex Cloud Benefits
+
+<v-clicks>
+
+- **Background execution** - Free up your terminal
+- **Parallel tasks** - Run multiple jobs simultaneously
+- **Persistent environments** - Pre-configured workspaces
+- **Team collaboration** - Share environments and results
+- **Long-running jobs** - Multi-hour refactoring sessions
+
+</v-clicks>
+
+---
+
+# IDE Extensions
+
+<v-clicks>
+
+Codex integrates with popular IDEs:
+
+- **VS Code** - Full extension in marketplace
+- **Cursor** - Native Codex support
+- **Windsurf** - Integrated workflows
+
+All extensions support:
+- Skills and MCP servers
+- Project-local configuration
+- Same approval policies as CLI
+
+</v-clicks>
+
+---
+
 # Model Context Protocol (MCP)
 
 ## Configure MCP Servers
@@ -1251,6 +1365,102 @@ LANG = "en_US.UTF-8"
 </v-clicks>
 
 ---
+
+# Enterprise Features
+
+<v-clicks>
+
+- **MDM Configuration** - Managed settings on macOS via MDM profiles
+- **Admin-scoped Skills** - Organization-wide skill deployment
+- **Requirements.toml** - Enforce policies across teams
+- **Zero Data Retention** - ZDR compliance with ChatGPT auth
+- **Audit Logging** - Track all agent actions
+
+</v-clicks>
+
+---
+
+# Requirements.toml
+
+Enforce organizational policies:
+
+```toml
+# /etc/codex/requirements.toml (UNIX)
+# or via MDM (macOS)
+
+[sandbox]
+allowed_modes = ["read-only", "workspace-write"]
+# Prevents danger-full-access
+
+[skills]
+admin_only = ["deploy-prod", "db-migrate"]
+
+[approval]
+required_for = ["file-delete", "git-push"]
+```
+
+---
+
+# Prompt Engineering Tips
+
+<v-clicks>
+
+## When to Use Each Mode
+
+| Mode | Use Case |
+|------|----------|
+| Interactive (`codex`) | Exploration, iteration, learning |
+| Single prompt (`codex "..."`) | Quick questions, small tasks |
+| Exec (`codex exec`) | Automation, CI/CD, scripts |
+
+</v-clicks>
+
+---
+
+# Effective Prompts
+
+<v-clicks>
+
+**Be specific about scope:**
+- ❌ "Fix the bugs"
+- ✅ "Fix the null pointer exception in UserService.java line 42"
+
+**Provide context:**
+- ❌ "Add tests"
+- ✅ "Add unit tests for the validateEmail function using Jest"
+
+**State expected outcomes:**
+- ❌ "Make it faster"
+- ✅ "Optimize the database query to reduce response time below 100ms"
+
+</v-clicks>
+
+---
+
+# AGENTS.md Best Practices
+
+<v-clicks>
+
+Keep it focused and current:
+
+```markdown
+# Project Context
+E-commerce platform, Node.js + PostgreSQL
+
+## Current Sprint
+Payment integration with Stripe
+
+## Conventions
+- Use async/await, not callbacks
+- All API responses follow { data, error } format
+- Tests required for all new endpoints
+```
+
+Update AGENTS.md as your project evolves!
+
+</v-clicks>
+
+---
 layout: image-left
 image: https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80
 backgroundSize: cover
@@ -1402,13 +1612,27 @@ backgroundSize: cover
 
 ---
 
+# Lab 7: Skills Creation
+
+<v-clicks>
+
+- Objective: Create a custom skill using `$skill-creator`
+- Timebox: 30 minutes
+- Task: Build a skill that generates conventional commit messages
+- Workspace: `exercises/skills-creation/`
+- Instructions: follow the Skills Creation lab handout
+
+</v-clicks>
+
+---
+
 # Advanced Exercise: Full-Stack E-Commerce
 
 <v-clicks>
 
 - Objective: Combine backend, frontend, and DevOps workflows into a production-style storefront
 - Suggested scope: Spring Boot API + React storefront + CI/CD automation
-- Workspace: Remix outputs from Labs 1–4 or start fresh from the provided capstone brief
+- Workspace: Remix outputs from Labs 1–5 or start fresh from the provided capstone brief
 - Instructions: follow the capstone handout distributed during the workshop
 
 </v-clicks>
@@ -1616,6 +1840,48 @@ npx @modelcontextprotocol/server-test
 # Enable debug logging
 RUST_LOG=trace codex
 ```
+
+---
+
+# Context Limit Errors
+
+<v-clicks>
+
+**Symptoms**: "Context window exceeded", slow responses
+
+**Solutions**:
+- Start a new session: `/clear` or new terminal
+- Use `codex resume` to continue with trimmed context
+- Break large tasks into smaller prompts
+- Remove verbose files from AGENTS.md
+
+</v-clicks>
+
+---
+
+# Model Availability Issues
+
+```bash
+# Check available models
+codex --list-models
+
+# Fall back to different model
+codex --model gpt-5-codex-mini
+
+# Verify API connectivity
+curl -I https://api.openai.com/v1/models
+```
+
+---
+
+# Common Error Messages
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| "Token expired" | Auth timeout | `codex login` again |
+| "Rate limited" | Too many requests | Wait or use --model mini |
+| "No such table" | Wrong osquery platform | Check platform docs |
+| "Sandbox denied" | Permission blocked | Adjust sandbox mode |
 
 ---
 
@@ -2037,6 +2303,41 @@ Every Thursday at 2 PM PST
 - Prompt libraries
 - Configuration examples
 - Integration guides
+
+</v-clicks>
+
+---
+
+# Codex CLI vs Claude Code
+
+For teams using both tools:
+
+| Aspect | Codex CLI | Claude Code |
+|--------|-----------|-------------|
+| **Model** | GPT-5.2-Codex | Claude Opus 4.5 |
+| **Runtime** | Rust | TypeScript |
+| **Memory File** | AGENTS.md | CLAUDE.md |
+| **Skills Location** | `~/.codex/skills/` | `~/.claude/skills/` |
+| **Skill Invoke** | `$skill-name` | Auto or explicit |
+| **Cloud Tasks** | Codex Cloud | - |
+
+---
+
+# When to Use Which?
+
+<v-clicks>
+
+**Choose Codex CLI when:**
+- GPT-5 model strengths needed
+- Codex Cloud for long tasks
+- Enterprise MDM requirements
+
+**Choose Claude Code when:**
+- Claude's reasoning preferred
+- Extended thinking needed
+- Anthropic ecosystem integration
+
+**Use both** with MCP to leverage each model's strengths!
 
 </v-clicks>
 
